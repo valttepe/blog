@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 // To use model
 use App\Post;
 
+// Sql querys
+use Illuminate\Support\Facades\DB;
+
 class PostsController extends Controller
 {
     /**
@@ -17,8 +20,14 @@ class PostsController extends Controller
     public function index()
     {
         // testing that all works return Post::all();
-        $posts = Post::all();
+        // Takes all posts and orders them by creation day and puts 10 posts per page
+        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
+        // $posts = Post::orderBy('created_at', 'desc')->take(1)->get();
 
+        // examples
+        // $post = Post::where('title', 'Post One')->get();
+        // $posts = DB::select('SELECT * FROM posts');
+        // $posts = Post::orderBy('created_at', 'desc')->take(1)->get();
         return view('posts.index')->with('posts', $posts);
     }
 
@@ -29,7 +38,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -51,7 +60,9 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+
+        return view('posts.show')->with('post', $post);
     }
 
     /**
