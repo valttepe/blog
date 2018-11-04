@@ -32,6 +32,10 @@ Route::get('/user/{id}', function($id) {
 // name of the file @ name of the function
 Route::get('/', 'PagesController@index');
 
-Route::get('/about', function() {
-    return view(pages.about);
-});
+Route::get('/about', 'PagesController@about');
+
+Route::get('/services', 'PagesController@services');
+
+// Usefull command for seeing all routes is php artisan route:list
+// Makes all routes from the Controller so that it doesn't require typing all routes in here.
+Route::resource('posts', 'PostsController');
